@@ -1,6 +1,7 @@
 package com.example.mvvmtemplate.repository
 
-import com.example.mvvmtemplate.model.CarListResult
+import com.example.mvvmtemplate.base.BaseRepository
+import com.example.mvvmtemplate.model.CelebritiesResult
 import com.example.mvvmtemplate.network.LoginApi
 import com.example.mvvmtemplate.utils.Resource
 import kotlinx.coroutines.CoroutineScope
@@ -11,15 +12,15 @@ import javax.inject.Inject
 class LoginRepositoryImpl @Inject constructor(private val loginApi: LoginApi) :
     BaseRepository(), LoginRepository {
 
-    override suspend fun carList(
+    override suspend fun celebrityList(
         scope: CoroutineScope,
-        onSuccess: ((List<CarListResult>?) -> Unit),
+        onSuccess: ((List<CelebritiesResult>?) -> Unit),
         onErrorAction: ((String?) -> Unit),
-    ): Flow<Resource<CarListResult>> {
+    ): Flow<Resource<CelebritiesResult>> {
         return flow {
             sendRequest(
                 scope = scope,
-                client = { loginApi.getCars() },
+                client = { loginApi.getCelebrities() },
                 onSuccess = {
                     onSuccess(it)
                 },

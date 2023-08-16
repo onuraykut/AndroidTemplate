@@ -26,7 +26,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofitBuilder(gsonBuilder: Gson): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("http://ozan.in/cars/")
+            .baseUrl("https://run.mocky.io/v3/")
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
     }
 

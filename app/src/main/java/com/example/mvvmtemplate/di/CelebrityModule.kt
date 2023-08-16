@@ -1,3 +1,4 @@
+/*
 package com.example.mvvmtemplate.di
 
 import com.example.mvvmtemplate.network.LoginApi
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CarsModule {
+object CelebrityModule {
 
     @Provides
     @Singleton
@@ -24,4 +25,4 @@ object CarsModule {
     @Singleton
     internal fun provideCarListRepository(service: LoginApi): LoginRepository =
         LoginRepositoryImpl(service)
-}
+}*/

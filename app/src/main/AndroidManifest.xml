@@ -6,10 +6,11 @@
 
     <application
         android:name=".MyApplication"
+        android:theme="@style/Theme.AppCompat.Light"
         android:allowBackup="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.cars.LoginActivity"
+            android:name=".ui.celebrity.LoginActivity"
             android:exported="true"
             android:screenOrientation="fullSensor">
             <intent-filter>

@@ -14,10 +14,9 @@ open class BaseRepository {
         client: suspend () -> T,
         onErrorAction: ((String?) -> Unit)?,
         onSuccess: ((T) -> Unit),
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        loginRequired: Boolean = true
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
     ) {
-        makeAPIRequest(scope, client, onSuccess, onErrorAction, dispatcher, loginRequired)
+        makeAPIRequest(scope, client, onSuccess, onErrorAction, dispatcher)
     }
 
     private fun <T> makeAPIRequest(
@@ -25,8 +24,7 @@ open class BaseRepository {
         client: suspend () -> T,
         onSuccess: ((T) -> Unit)? = null,
         onErrorAction: ((String?) -> Unit)? = null,
-        dispatcher: CoroutineDispatcher,
-        loginRequired: Boolean
+        dispatcher: CoroutineDispatcher
     ) {
         scope.launch {
             try {
