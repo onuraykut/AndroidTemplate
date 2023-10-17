@@ -1,4 +1,4 @@
-/*
+
 package com.example.mvvmtemplate.di
 
 import com.example.mvvmtemplate.network.LoginApi
@@ -8,7 +8,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -17,12 +16,6 @@ object CelebrityModule {
 
     @Provides
     @Singleton
-    internal fun provideEndPointService(
-        retrofit: Retrofit,
-    ): LoginApi = retrofit.create(LoginApi::class.java)
-
-    @Provides
-    @Singleton
     internal fun provideCarListRepository(service: LoginApi): LoginRepository =
         LoginRepositoryImpl(service)
-}*/
+}
