@@ -14,14 +14,22 @@ android {
         minSdk 23
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    //signingConfigs eklenecek
+
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -34,6 +42,21 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+
+    flavorDimensions "env"
+    productFlavors{
+        _test {
+            dimension "env"
+            applicationIdSuffix = '.test'
+            resValue "string", "app_name", "Demo App_TEST"
+            buildConfigField "String", "API_URL", '"https://run.mocky.io/v3/"'
+        }
+        _prod {
+            dimension "env"
+            resValue "string", "app_name", "Demo App"
+            buildConfigField "String", "API_URL", '"https://run.mocky.io/v3/"'
+        }
     }
 }
 

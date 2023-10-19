@@ -1,5 +1,6 @@
 package com.example.mvvmtemplate.di
 
+import com.example.mvvmtemplate.BuildConfig
 import com.example.mvvmtemplate.network.LoginApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -26,7 +27,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofitBuilder(gsonBuilder: Gson): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("https://run.mocky.io/v3/")
+            .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
     }
 
