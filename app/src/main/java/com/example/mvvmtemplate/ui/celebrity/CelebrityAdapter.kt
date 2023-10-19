@@ -3,35 +3,36 @@ package com.example.mvvmtemplate.ui.celebrity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mvvmtemplate.base.BaseAdapter
+import com.example.mvvmtemplate.base.BaseHolder
 import com.example.mvvmtemplate.databinding.RowCelebLayoutBinding
 import com.example.mvvmtemplate.model.Celebrity
 
-class CelebrityAdapter() : RecyclerView.Adapter<CelebrityAdapter.ViewHolder>() {
+class CelebrityAdapter(private val onClickAction: ((Celebrity) -> Unit)) : BaseAdapter<Celebrity, RowCelebLayoutBinding, CelebrityHolder>() {
 
-    private val items = mutableListOf<Celebrity>()
-
-    class ViewHolder(val binding: RowCelebLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            RowCelebLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CelebrityHolder {
+        return CelebrityHolder(
+            RowCelebLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onClickAction
+        )
     }
+}
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder) {
-            binding.text.text = "sda"
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
-    fun setData(itemList: List<Celebrity>) {
-        items.clear()
-        items.addAll(itemList)
-        notifyDataSetChanged()
+class CelebrityHolder(
+    viewBinding: RowCelebLayoutBinding,
+    private val onClickAction: (Celebrity) -> Unit
+) : BaseHolder<Celebrity, RowCelebLayoutBinding>(viewBinding) {
+    override fun bind(binding: RowCelebLayoutBinding, item: Celebrity?) {
+        item?.let { celebrity ->
+            binding.apply {
+                text.text = celebrity.nameSurname
+                text.setOnClickListener {
+                    onClickAction.invoke(item)
+                }
+            }
+        } ?: return
     }
 }
