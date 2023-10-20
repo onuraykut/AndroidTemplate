@@ -5,6 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mvvmtemplate.base.BaseActivity
 import com.example.mvvmtemplate.databinding.ActivityCarsLayoutBinding
+import com.example.mvvmtemplate.model.Celebrity
 import com.example.mvvmtemplate.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,7 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
     override fun getViewBinding() = ActivityCarsLayoutBinding.inflate(layoutInflater)
 
     private val adapter: CelebrityAdapter by lazy {
-        CelebrityAdapter()
+        CelebrityAdapter(::onClickAction)
     }
 
     override fun onActivityCreated() {
@@ -28,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
     }
 
     override fun showHideProgress(isShow: Boolean) {
-        //loading çıkart
+
     }
 
     private fun observeCelebrities() {
@@ -36,11 +37,15 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
             viewModel.onCelebList.collect {
                 when(it) {
                     Resource.Empty -> {}
-                    Resource.Loading -> {}
+                    Resource.Loading -> {
+                        showProgressDialog()
+                    }
                     is Resource.Success -> {
+                        dismissProgressDialog()
 
                     }
                     is Resource.Failure -> {
+                        dismissProgressDialog()
 
                     }
                 }
@@ -51,5 +56,9 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
     private fun setAdapter() {
         binding.recycler.layoutManager = LinearLayoutManager(this)
         binding.recycler.adapter = adapter
+    }
+
+    private fun onClickAction(celeb: Celebrity) {
+        viewModel.redirectCelebrityDetail(celeb)
     }
 }

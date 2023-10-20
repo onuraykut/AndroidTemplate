@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.example.mvvmtemplate.components.ProgressDialog
 import com.example.mvvmtemplate.extensions.hideKeyboard
 import com.example.mvvmtemplate.utils.OnBackPressListener
+import com.example.mvvmtemplate.utils.tryCatch
 
 
 abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
@@ -23,6 +25,8 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
     protected abstract val viewModel: VM
 
     var onBackPressListener: OnBackPressListener? = null
+
+    private val progressDialog by lazy { ProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +57,16 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
     }
 
     override fun onDestroy() {
-        showHideProgress(false)
+        //showHideProgress(false)
+        dismissProgressDialog()
         super.onDestroy()
+    }
+
+    open fun showProgressDialog() {
+        tryCatch { progressDialog.show() }
+    }
+
+    open fun dismissProgressDialog() {
+        tryCatch { progressDialog.dismiss() }
     }
 }

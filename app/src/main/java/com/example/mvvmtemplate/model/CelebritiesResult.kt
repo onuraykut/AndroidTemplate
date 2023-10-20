@@ -5,5 +5,5 @@ import java.io.Serializable
 
 data class CelebritiesResult(
     @SerializedName("user_type")
-    var userType: UserType
+    val userType: UserType
 ) : Serializable

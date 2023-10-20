@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.mvvmtemplate.utils.OnBackPressListener
+import com.example.mvvmtemplate.extensions.observeThis
 
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), OnBackPressListener {
 
@@ -20,8 +21,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
 
     abstract fun onFragmentCreated()
 
-    abstract fun showHideProgress(isShow: Boolean)
-
     open fun observe() {}
 
     override fun onCreateView(
@@ -32,7 +31,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
         binding = getViewBinding()
         onFragmentCreated()
         observe()
-
+        observeLoading()
         return binding.root
     }
 
@@ -69,5 +68,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
 
     override fun onDestroyView() {
         super.onDestroyView()
+    }
+
+    private fun observeLoading() {
+        viewModel.loadingDetection.observeThis(viewLifecycleOwner) {
+            baseActivity?.showHideProgress(it)
+        }
     }
 }

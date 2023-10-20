@@ -5,5 +5,5 @@ import java.io.Serializable
 
 data class UserType(
     @SerializedName("celebrities")
-    var list: List<Celebrity>
+    val list: List<Celebrity>
 ) : Serializable
