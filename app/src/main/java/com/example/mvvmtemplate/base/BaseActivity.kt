@@ -57,8 +57,7 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
     }
 
     override fun onDestroy() {
-        //showHideProgress(false)
-        dismissProgressDialog()
+        tryCatch { if (progressDialog.isShowing) progressDialog.cancel() }
         super.onDestroy()
     }
 

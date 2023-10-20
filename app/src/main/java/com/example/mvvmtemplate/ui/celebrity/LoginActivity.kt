@@ -41,12 +41,11 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
                         showProgressDialog()
                     }
                     is Resource.Success -> {
+                        adapter.replaceData(it.data?.userType?.list)
                         dismissProgressDialog()
-
                     }
                     is Resource.Failure -> {
                         dismissProgressDialog()
-
                     }
                 }
             }

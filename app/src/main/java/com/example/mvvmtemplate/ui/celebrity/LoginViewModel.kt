@@ -28,12 +28,9 @@ class  LoginViewModel @Inject constructor(
         repository.celebrityList(
             viewModelScope,
             onSuccess = {
-                //listeyi bas
-                Log.i("TAG", "response: $it")
                 _onCelebList.value = Resource.Success(it)
             },
             onErrorAction = {
-                // hata mesajı bas
                 _onCelebList.value = Resource.Failure(it)
             }
         )
