@@ -23,6 +23,9 @@ class  LoginViewModel @Inject constructor(
     private val _onCelebList = MutableStateFlow<Resource<CelebritiesResult?>>(Resource.Empty)
     val onCelebList: StateFlow<Resource<CelebritiesResult?>> = _onCelebList
 
+    private val _redirectCelebrityDetail = MutableStateFlow<Celebrity?>(null)
+    val redirectCelebrityDetail: StateFlow<Celebrity?> = _redirectCelebrityDetail
+
     fun getCelebrityList() = viewModelScope.launch {
         _onCelebList.value = Resource.Loading
         repository.celebrityList(
@@ -37,7 +40,7 @@ class  LoginViewModel @Inject constructor(
     }
 
     fun redirectCelebrityDetail(celebrity: Celebrity) {
-
+        _redirectCelebrityDetail.value = celebrity
     }
 
 

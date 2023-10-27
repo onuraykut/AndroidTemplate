@@ -1,5 +1,7 @@
 package com.example.mvvmtemplate.ui.celebrity
 
+import android.content.Context
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,6 +52,14 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
                 }
             }
         }
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.redirectCelebrityDetail.collect {
+                it?.let {
+                    startActivity(createIntent(this@LoginActivity, it))
+                }
+            }
+        }
     }
 
     private fun setAdapter() {
@@ -59,5 +69,16 @@ class LoginActivity : BaseActivity<ActivityCarsLayoutBinding, LoginViewModel>() 
 
     private fun onClickAction(celeb: Celebrity) {
         viewModel.redirectCelebrityDetail(celeb)
+    }
+
+    companion object {
+
+        private const val CELEB_DETAIL = "CELEB_DETAIL"
+        fun createIntent(
+            context: Context,
+            celeb: Celebrity
+        ) = Intent(context, LoginActivity::class.java).apply {
+            putExtra(CELEB_DETAIL, celeb)
+        }
     }
 }
